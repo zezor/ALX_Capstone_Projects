@@ -46,9 +46,9 @@ def add_budget(request):
     return render(request, 'pfm/add_budget.html', {'bud_form': bud_form})
 
 
-def delete_expense(request, expense_id):
+def delete_expense(request, pk):
     try:
-        expense = Expense.objects.get(id=expense_id, user=request.user)
+        expense = Expense.objects.get(id=pk, user=request.user)
         expense.delete()
         return render(request, 'pfm/expense_deleted.html')
     except Expense.DoesNotExist:
