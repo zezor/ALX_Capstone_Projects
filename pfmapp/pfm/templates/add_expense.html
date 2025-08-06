@@ -1,0 +1,13 @@
+{% extends 'pfm/base.html' %}
+{% block content %}
+<h1>Add Expense</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ exp_form.as_p }}
+    <button type="submit">Add Expense</button>
+</form>
+{% endblock %}
+
+{% block footer %}
+<p>&copy; 2023 Personal Finance Manager. All rights reserved.</p>
+{% endblock %}

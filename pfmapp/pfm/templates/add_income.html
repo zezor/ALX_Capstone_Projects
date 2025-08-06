@@ -1,0 +1,13 @@
+{% extends 'pfm/base.html' %}
+{% block content %}
+<h1>Add Income</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ inc_form.as_p }}
+    <button type="submit">Add Income</button>
+</form>
+{% endblock %}
+
+{% block footer %}
+<p>&copy; 2023 Personal Finance Manager. All rights reserved.</p>
+{% endblock %}

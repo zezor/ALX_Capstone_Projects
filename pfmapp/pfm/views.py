@@ -1,20 +1,58 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Expense, Income, Budget
+from .forms import ExpenseForm, IncomeForm, BudgetForm
 
 # Create your views here.
 
 def add_expense(request):
     if request.method == 'POST':
         exp_form = ExpenseForm(request.POST)
-        # Logic to handle expense creation
-        pass
-    return render(request, 'pfm/add_expense.html')
+        if exp_form.is_valid():
+            expense = exp_form.save(commit=False)
+            expense.user = request.user
+            expense.save()
+            return redirect('expense_list')
+
+    else:
+        exp_form = ExpenseForm()
+
+    return render(request, 'pfm/add_expense.html', {'exp_form': exp_form})
 
 
+def add_income(request):
+    if request.method == 'POST':
+        inc_form = IncomeForm(request.POST)
+        if inc_form.is_valid():
+            income = inc_form.save(commit=False)
+            income.user = request.user
+            income.save()
+            return redirect('income_list')
+    else:
+        inc_form = IncomeForm()
+    return render(request, 'pfm/add_income.html', {'inc_form': inc_form})
 
 
+def add_budget(request):
+    if request.method == 'POST':
+        bud_form = BudgetForm(request.POST)
+        if bud_form.is_valid():
+            budget = bud_form.save(commit=False)
+            budget.user = request.user
+            budget.save()
+            return redirect('budget_list')
+    else:
+        bud_form = BudgetForm()
+
+    return render(request, 'pfm/add_budget.html', {'bud_form': bud_form})
 
 
+def delete_expense(request, expense_id):
+    try:
+        expense = Expense.objects.get(id=expense_id, user=request.user)
+        expense.delete()
+        return render(request, 'pfm/expense_deleted.html')
+    except Expense.DoesNotExist:
+        return render(request, 'pfm/expense_not_found.html')
 
 
 def expense_list(request):
@@ -41,4 +79,6 @@ def budget_list(request):
     return render(request, 'pfm/budget_list.html', context)
 
 def home(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     return render(request, 'pfm/home.html')

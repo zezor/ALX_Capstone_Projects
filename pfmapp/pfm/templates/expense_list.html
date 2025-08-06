@@ -1,0 +1,30 @@
+{% extends 'pfm/base.html' %}
+{% block content %}
+<h1>Expense List</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for expense in expenses %}
+        <tr>
+            <td>{{ expense.id }}</td>
+            <td>{{ expense.name }}</td>
+            <td>{{ expense.amount }}</td>
+            <td>
+                <a href="{% url 'edit_expense' expense.id %}">Edit</a>
+                <a href="{% url 'delete_expense' expense.id %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+{% block footer %}
+<p>&copy; 2023 Personal Finance Manager. All rights reserved.</p>
+{% endblock %}
