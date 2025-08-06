@@ -1,0 +1,16 @@
+{% extends 'pfm/base.html' %}
+{% block content %}
+<h1>Update Expense</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ exp_form.as_p }}
+    <button type="submit">Update</button>
+</form>
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <p>&copy; 2023 Personal Finance Manager</p>
+</footer>
+{% endblock %}
+{% block scripts %}

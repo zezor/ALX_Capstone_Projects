@@ -17,7 +17,7 @@
             <td>{{ expense.name }}</td>
             <td>{{ expense.amount }}</td>
             <td>
-
+                <a href="{% url 'update_expense' expense.id %}">Edit</a>
                 <a href="{% url 'delete_expense' expense.id %}">Delete</a>
             </td>
         </tr>

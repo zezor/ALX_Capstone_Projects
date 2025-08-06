@@ -53,6 +53,26 @@ def delete_expense(request, pk):
         return render(request, 'pfm/expense_deleted.html')
     except Expense.DoesNotExist:
         return render(request, 'pfm/expense_not_found.html')
+    
+def delete_income(request, pk):
+    try:
+        income = Income.objects.get(id=pk, user=request.user)
+        income.delete()
+        return render(request, 'pfm/income_deleted.html')
+    except Income.DoesNotExist:
+        return render(request, 'pfm/income_not_found.html') 
+    
+def update_expense(request, pk):
+        expense = Expense.objects.get(id=pk, user=request.user)
+        if request.method == 'POST':
+            exp_form = ExpenseForm(request.POST, instance=expense)
+            if exp_form.is_valid():
+                exp_form.save()
+                return redirect('expenses')
+        else:
+            exp_form = ExpenseForm(instance=expense)
+        return render(request, 'pfm/update_expense.html', {'exp_form': exp_form})
+ 
 
 
 def expense_list(request):
