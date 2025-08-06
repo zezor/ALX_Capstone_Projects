@@ -23,3 +23,13 @@ class Income(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.amount} on {self.date}"
+    
+class Budget(models.Model):
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='budgets')
+    name = models.CharField(max_length=100, blank=True)
+    month = models.DateField()
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.name} - {self.month} from {self.start_date} to {self.end_date}"
