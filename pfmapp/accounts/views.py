@@ -9,16 +9,7 @@ from .serializers import UserRegistrationSerializer
 
 
 User = get_user_model()
-# from .models import User
-# Create your views here.
-"""
-View
--Handle user registration
--Expect an email and password - REQUIRED
--Validate email and password
--save the data
--Return a response to the client
-"""
+
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
