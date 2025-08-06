@@ -78,7 +78,3 @@ def budget_list(request):
     }
     return render(request, 'pfm/budget_list.html', context)
 
-def home(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    return render(request, 'pfm/home.html')
