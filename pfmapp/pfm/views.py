@@ -6,12 +6,25 @@ from .models import Expense, Income, Budget
 
 def expense_list(request):
     expenses = Expense.objects.filter(user=request.user)
-    return render(request, 'pfm/expense_list.html', {'expenses': expenses})
+
+
+    context = {
+        'expenses': expenses
+    }
+    return render(request, 'pfm/expense_list.html', context)
+
 
 def income_list(request):
     incomes = Income.objects.filter(user=request.user)
-    return render(request, 'pfm/income_list.html', {'incomes': incomes})
+    context = {
+        'incomes': incomes
+    }
+    return render(request, 'pfm/income_list.html', context)
+
 
 def budget_list(request):
     budgets = Budget.objects.filter(user=request.user)
-    return render(request, 'pfm/budget_list.html', {'budgets': budgets})
+    context = {
+        'budgets': budgets
+    }
+    return render(request, 'pfm/budget_list.html', context)
