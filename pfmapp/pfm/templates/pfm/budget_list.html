@@ -1,6 +1,6 @@
 {% extends 'pfm/base.html' %}
 {% block content %}
-<h1>Income List</h1>
+<h1>Budget List</h1>
 <table>
     <thead>
         <tr>
@@ -11,18 +11,16 @@
         </tr>
     </thead>
     <tbody>
-        {% for income in incomes %}
+        {% for budget in budgets %}
         <tr>
-            <td>{{ income.id }}</td>
-            <td>{{ income.name }}</td>
-            <td>{{ income.amount }}</td>
+            <td>{{ budget.id }}</td>
+            <td>{{ budget.name }}</td>
+            <td>{{ budget.amount }}</td>
             <td>
-                <a href="{% url 'edit_income' income.id %}">Edit</a>
-                <a href="{% url 'delete_income' income.id %}">Delete</a>
+           
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 {% endblock %}
-{% block footer %}

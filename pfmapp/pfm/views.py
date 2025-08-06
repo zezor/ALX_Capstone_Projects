@@ -11,7 +11,7 @@ def add_expense(request):
             expense = exp_form.save(commit=False)
             expense.user = request.user
             expense.save()
-            return redirect('expense_list')
+            return redirect('expenses')
 
     else:
         exp_form = ExpenseForm()
@@ -26,7 +26,7 @@ def add_income(request):
             income = inc_form.save(commit=False)
             income.user = request.user
             income.save()
-            return redirect('income_list')
+            return redirect('incomes')
     else:
         inc_form = IncomeForm()
     return render(request, 'pfm/add_income.html', {'inc_form': inc_form})
@@ -39,7 +39,7 @@ def add_budget(request):
             budget = bud_form.save(commit=False)
             budget.user = request.user
             budget.save()
-            return redirect('budget_list')
+            return redirect('budgets')
     else:
         bud_form = BudgetForm()
 
