@@ -3,11 +3,22 @@ from .models import Expense, Income, Budget
 
 # Create your views here.
 
+def add_expense(request):
+    if request.method == 'POST':
+        exp_form = ExpenseForm(request.POST)
+        # Logic to handle expense creation
+        pass
+    return render(request, 'pfm/add_expense.html')
+
+
+
+
+
+
+
 
 def expense_list(request):
     expenses = Expense.objects.filter(user=request.user)
-
-
     context = {
         'expenses': expenses
     }
@@ -28,3 +39,6 @@ def budget_list(request):
         'budgets': budgets
     }
     return render(request, 'pfm/budget_list.html', context)
+
+def home(request):
+    return render(request, 'pfm/home.html')
