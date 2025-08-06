@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pfm',  # Your application
+    'accounts',  # Your custom user application
 ]
 
 MIDDLEWARE = [
