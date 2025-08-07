@@ -2,6 +2,8 @@ from django.db import models
 
 # Create your models here.
 
+
+
 class Expense(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='expenses')
     name = models.CharField(max_length=100, blank=True)
@@ -12,7 +14,8 @@ class Expense(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.amount} on {self.date}"
-    
+
+
 class Income(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='incomes')
     name = models.CharField(max_length=100, blank=True)
@@ -23,7 +26,8 @@ class Income(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.amount} on {self.date}"
-    
+
+ 
 class Budget(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='budgets')
     name = models.CharField(max_length=100, blank=True)

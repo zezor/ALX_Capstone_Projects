@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Expense, Income, Budget
 from .forms import ExpenseForm, IncomeForm, BudgetForm
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
-
+@login_required
 def add_expense(request):
     if request.method == 'POST':
         exp_form = ExpenseForm(request.POST)
@@ -18,7 +20,7 @@ def add_expense(request):
 
     return render(request, 'pfm/add_expense.html', {'exp_form': exp_form})
 
-
+@login_required
 def add_income(request):
     if request.method == 'POST':
         inc_form = IncomeForm(request.POST)
@@ -31,7 +33,7 @@ def add_income(request):
         inc_form = IncomeForm()
     return render(request, 'pfm/add_income.html', {'inc_form': inc_form})
 
-
+@login_required
 def add_budget(request):
     if request.method == 'POST':
         bud_form = BudgetForm(request.POST)
@@ -45,7 +47,7 @@ def add_budget(request):
 
     return render(request, 'pfm/add_budget.html', {'bud_form': bud_form})
 
-
+@login_required
 def delete_expense(request, pk):
     try:
         expense = Expense.objects.get(id=pk, user=request.user)
@@ -53,7 +55,8 @@ def delete_expense(request, pk):
         return render(request, 'pfm/expense_deleted.html')
     except Expense.DoesNotExist:
         return render(request, 'pfm/expense_not_found.html')
-    
+
+@login_required    
 def delete_income(request, pk):
     try:
         income = Income.objects.get(id=pk, user=request.user)
@@ -61,7 +64,9 @@ def delete_income(request, pk):
         return render(request, 'pfm/income_deleted.html')
     except Income.DoesNotExist:
         return render(request, 'pfm/income_not_found.html') 
-    
+
+
+@login_required    
 def update_expense(request, pk):
         expense = Expense.objects.get(id=pk, user=request.user)
         if request.method == 'POST':
