@@ -18,6 +18,6 @@ class IncomeAdmin(admin.ModelAdmin):
 
 @admin.register(Budget)
 class BudgetAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'month', 'start_date', 'end_date')
+    list_display = ('user', 'name', 'month', 'start_date', 'end_date', 'allocated_amount')
     list_filter = ('user', 'month')
     search_fields = ('name', 'user__username')
