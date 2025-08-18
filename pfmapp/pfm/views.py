@@ -81,25 +81,28 @@ def update_expense(request, pk):
 
 
 def expense_list(request):
+  
+       
+  if request.user.is_authenticated:
+
     expenses = Expense.objects.filter(user=request.user)
-    context = {
-        'expenses': expenses
-    }
-    return render(request, 'pfm/expense_list.html', context)
+  else:
+        expenses = Expense.objects.none()
+  return render(request, 'pfm/expense_list.html', {'expenses': expenses})
 
 
 def income_list(request):
-    incomes = Income.objects.filter(user=request.user)
-    context = {
-        'incomes': incomes
-    }
-    return render(request, 'pfm/income_list.html', context)
+    if request.user.is_authenticated:
+        incomes = Income.objects.filter(user=request.user)
+    else:
+        incomes = Income.objects.none()
+    return render(request, 'pfm/income_list.html', {'incomes': incomes})
 
 
 def budget_list(request):
-    budgets = Budget.objects.filter(user=request.user)
-    context = {
-        'budgets': budgets
-    }
-    return render(request, 'pfm/budget_list.html', context)
+    if request.user.is_authenticated:
+        budgets = Budget.objects.filter(user=request.user)
+    else:
+        budgets = Budget.objects.none()
+    return render(request, 'pfm/budget_list.html', {'budgets': budgets})
 
