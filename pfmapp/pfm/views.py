@@ -20,7 +20,7 @@ def add_expense(request):
 
     return render(request, 'pfm/add_expense.html', {'exp_form': exp_form})
 
-@login_required
+
 def add_income(request):
     if request.method == 'POST':
         inc_form = IncomeForm(request.POST)
