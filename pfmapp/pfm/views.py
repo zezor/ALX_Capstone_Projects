@@ -1,108 +1,65 @@
-from django.shortcuts import render, redirect
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 from .models import Expense, Income, Budget
-from .forms import ExpenseForm, IncomeForm, BudgetForm
-from django.contrib.auth.decorators import login_required
+from .serializers import ExpenseSerializer, IncomeSerializer, BudgetSerializer
 
 
-# Create your views here.
-@login_required
-def add_expense(request):
-    if request.method == 'POST':
-        exp_form = ExpenseForm(request.POST)
-        if exp_form.is_valid():
-            expense = exp_form.save(commit=False)
-            expense.user = request.user
-            expense.save()
-            return redirect('expenses')
+# ---------- EXPENSE VIEWS ----------
+class ExpenseListCreateView(generics.ListCreateAPIView):
+    serializer_class = ExpenseSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    else:
-        exp_form = ExpenseForm()
+    def get_queryset(self):
+        return Expense.objects.filter(user=self.request.user)
 
-    return render(request, 'pfm/add_expense.html', {'exp_form': exp_form})
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
-def add_income(request):
-    if request.method == 'POST':
-        inc_form = IncomeForm(request.POST)
-        if inc_form.is_valid():
-            income = inc_form.save(commit=False)
-            income.user = request.user
-            income.save()
-            return redirect('incomes')
-    else:
-        inc_form = IncomeForm()
-    return render(request, 'pfm/add_income.html', {'inc_form': inc_form})
+class ExpenseDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ExpenseSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-@login_required
-def add_budget(request):
-    if request.method == 'POST':
-        bud_form = BudgetForm(request.POST)
-        if bud_form.is_valid():
-            budget = bud_form.save(commit=False)
-            budget.user = request.user
-            budget.save()
-            return redirect('budgets')
-    else:
-        bud_form = BudgetForm()
-
-    return render(request, 'pfm/add_budget.html', {'bud_form': bud_form})
-
-@login_required
-def delete_expense(request, pk):
-    try:
-        expense = Expense.objects.get(id=pk, user=request.user)
-        expense.delete()
-        return render(request, 'pfm/expense_deleted.html')
-    except Expense.DoesNotExist:
-        return render(request, 'pfm/expense_not_found.html')
-
-@login_required    
-def delete_income(request, pk):
-    try:
-        income = Income.objects.get(id=pk, user=request.user)
-        income.delete()
-        return render(request, 'pfm/income_deleted.html')
-    except Income.DoesNotExist:
-        return render(request, 'pfm/income_not_found.html') 
+    def get_queryset(self):
+        return Expense.objects.filter(user=self.request.user)
 
 
-@login_required    
-def update_expense(request, pk):
-        expense = Expense.objects.get(id=pk, user=request.user)
-        if request.method == 'POST':
-            exp_form = ExpenseForm(request.POST, instance=expense)
-            if exp_form.is_valid():
-                exp_form.save()
-                return redirect('expenses')
-        else:
-            exp_form = ExpenseForm(instance=expense)
-        return render(request, 'pfm/update_expense.html', {'exp_form': exp_form})
- 
+# ---------- INCOME VIEWS ----------
+class IncomeListCreateView(generics.ListCreateAPIView):
+    serializer_class = IncomeSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Income.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
-def expense_list(request):
-  
-       
-  if request.user.is_authenticated:
+class IncomeDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = IncomeSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    expenses = Expense.objects.filter(user=request.user)
-  else:
-        expenses = Expense.objects.none()
-  return render(request, 'pfm/expense_list.html', {'expenses': expenses})
+    def get_queryset(self):
+        return Income.objects.filter(user=self.request.user)
 
 
-def income_list(request):
-    if request.user.is_authenticated:
-        incomes = Income.objects.filter(user=request.user)
-    else:
-        incomes = Income.objects.none()
-    return render(request, 'pfm/income_list.html', {'incomes': incomes})
+# ---------- BUDGET VIEWS ----------
+class BudgetListCreateView(generics.ListCreateAPIView):
+    serializer_class = BudgetSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
-def budget_list(request):
-    if request.user.is_authenticated:
-        budgets = Budget.objects.filter(user=request.user)
-    else:
-        budgets = Budget.objects.none()
-    return render(request, 'pfm/budget_list.html', {'budgets': budgets})
+class BudgetDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = BudgetSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)

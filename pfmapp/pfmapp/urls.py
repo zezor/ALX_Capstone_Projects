@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('pfm.urls')),
+    path('api/', include('pfm.urls')),
     path('', include('accounts.urls')),
     path('', views.home, name='home'),
 ]
