@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pfm',  # Your application
-    'accounts',  # Your custom user application
-    'rest_framework',  # Django REST Framework for API support
+    'pfm',  
+    'accounts',  
+    'rest_framework',  
+    'rest_framework.authtoken',  
 ]
 
 MIDDLEWARE = [
@@ -84,6 +85,12 @@ WSGI_APPLICATION = 'pfmapp.wsgi.application'
 #     }
 # }
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
 
 
 DATABASES = {
