@@ -20,14 +20,14 @@ class RegisterView(generics.CreateAPIView):
         response = super().create(request, *args, **kwargs)
         user = User.objects.get(email=request.data['email'])
         token, created = Token.objects.get_or_create(user=user)
+        response.data['message'] = 'User registered successfully'
         response.data['token'] = token.key
-        
         return response
 
     
 
 class LoginView(APIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny]  # Allow any user to access this view
 
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(data=request.data)
@@ -35,8 +35,8 @@ class LoginView(APIView):
         user = serializer.validated_data['user']
         # return Response({'user': UserSerializer(user).data})
         token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key, 'user': UserSerializer(user).data})
-    
+        return Response({'token': token.key, 'user': UserSerializer(user).data},status=200)
+
 
 
 class LogoutView(APIView):
@@ -49,7 +49,8 @@ class LogoutView(APIView):
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
+    pagination_class = [permissions.IsAdminUser]
 
     def get_object(self):
         return self.request.user
@@ -58,7 +59,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ProfileView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.AllowAny]
+    pagination_class = [permissions.IsAdminUser]  # Only allow admin users to access this view
 
     def get_object(self):
         return self.request.user
