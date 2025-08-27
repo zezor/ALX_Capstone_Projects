@@ -27,7 +27,7 @@ class RegisterView(generics.CreateAPIView):
     
 
 class LoginView(APIView):
-    permission_classes = [permissions.AllowAny]  # Allow any user to access this view
+    permission_classes = [permissions.AllowAny]  
 
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(data=request.data)
@@ -59,8 +59,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ProfileView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    pagination_class = [permissions.IsAdminUser]  # Only allow admin users to access this view
-
+    pagination_class = [permissions.IsAdminUser]  
     def get_object(self):
         return self.request.user
     

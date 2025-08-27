@@ -1,9 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
-
-
 class Expense(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='expenses')
     name = models.CharField(max_length=100, blank=True)

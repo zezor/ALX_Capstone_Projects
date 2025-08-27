@@ -95,12 +95,12 @@ REST_FRAMEWORK = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # for mysqlclient
+        'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'pfmapp',
         'USER': 'kemma',
         'PASSWORD': 'Rasnaana12@',
-        'HOST': 'localhost',   # or the IP address of your DB server
-        'PORT': '3306',        # default MySQL port
+        'HOST': 'localhost',   
+        'PORT': '3306',        
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },

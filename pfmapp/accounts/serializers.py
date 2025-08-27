@@ -39,7 +39,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         token, created = Token.objects.get_or_create(user=user)
         validated_data['token'] = token.key
         user.token = token.key
-        user.save()  # Save the user instance with the new token
+        user.save()  
         return user
 
 class LoginSerializer(serializers.Serializer):
