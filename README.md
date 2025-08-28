@@ -72,15 +72,15 @@ End Date
 
 /api/expenses/              GET/POST                .......List or create expenses
 
-/api/expenses/<id>/        PUT/DELETE               .......Update/delete an expense
+/api/expenses/id/        PUT/DELETE               .......Update/delete an expense
 
 /api/income/                GET/POST                ......List or create income
 
-/api/income/<id>/          PUT/DELETE               .......Update/delete income
+/api/income/id/          PUT/DELETE               .......Update/delete income
 
 /api/budgets/              GET/POST                 ........List or create budget
 
-/api/budgets/<id>/         PUT/DELETE               .......Update/delete budget
+/api/budgets/id/         PUT/DELETE               .......Update/delete budget
 
 /api/login/                  POST                   .......Login to get auth token
 
