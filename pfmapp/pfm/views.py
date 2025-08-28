@@ -78,7 +78,7 @@ class DashboardView(generics.GenericAPIView):
         user = request.user
         total_income = sum(item.amount for item in user.incomes.all())
         total_expenses = sum(item.amount for item in user.expenses.all())
-        budget = user.budgets.filter(month=datetime.now().date()).first()
+        budget = user.budgets.filter(month=datetime.now().date()).first()  ##FUNCTIONALITY NOT WORKING
 
         data = {
             "total_income": total_income,

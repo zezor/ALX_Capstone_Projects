@@ -1,0 +1,126 @@
+Personal Financial Management API Documentation
+Authentication
+All endpoints (except budget endpoints) require Token Authentication.
+Include your token in the Authorization header as:
+Authorization: Token <your_token>
+
+Endpoints
+Expenses
+List/Create Expenses
+GET /api/expenses/
+Returns a list of expenses for the authenticated user.
+POST /api/expenses/
+Creates a new expense for the authenticated user.
+
+Request Body (POST):
+{
+  "name": "Lunch",
+  "amount": 15.00,
+  "category": "Food",
+  "description": "Lunch at cafe",
+  "date": "2024-06-01"
+}
+Response
+{
+  "id": 1,
+  "name": "Lunch",
+  "amount": 15.00,
+  "category": "Food",
+  "description": "Lunch at cafe",
+  "date": "2024-06-01"
+}
+
+Retrieve/Update/Delete Expense
+GET /api/expenses/<id>/
+PUT /api/expenses/<id>/
+DELETE /api/expenses/<id>/
+
+
+
+
+Income
+List/Create Income
+
+GET /api/income/
+Returns a list of income records for the authenticated user.
+POST /api/income/
+Creates a new income record.
+
+Request Body (POST):
+{
+  "name": "Salary",
+  "amount": 2000.00,
+  "source": "Job",
+  "description": "Monthly salary",
+  "date": "2024-06-01"
+}
+
+Response
+{
+  "id": 1,
+  "name": "Salary",
+  "amount": 2000.00,
+  "source": "Job",
+  "description": "Monthly salary",
+  "date": "2024-06-01"
+}
+
+Retrieve/Update/Delete Income
+GET /api/income/<id>/
+PUT /api/income/<id>/
+DELETE /api/income/<id>/
+
+
+
+
+Budgets
+List/Create Budgets
+GET /api/budgets/
+Returns a list of budgets for the authenticated user.
+POST /api/budgets/
+
+Creates a new budget.
+Request Body (POST):
+{
+  "name": "June Budget",
+  "allocated_amount": 1000.00,
+  "month": "2024-06-01",
+  "start_date": "2024-06-01",
+  "end_date": "2024-06-30"
+}
+
+Response
+{
+  "id": 1,
+  "name": "June Budget",
+  "allocated_amount": 1000.00,
+  "month": "2024-06-01",
+  "start_date": "2024-06-01",
+  "end_date": "2024-06-30"
+}
+
+Retrieve/Update/Delete Budget
+GET /api/budgets/<id>/
+PUT /api/budgets/<id>/
+DELETE /api/budgets/<id>/
+
+
+Dashboard
+Get Dashboard Summary
+GET /api/dashboard/
+
+{
+  "total_income": 2000.00,
+  "total_expenses": 500.00,
+  "remaining_budget": 500.00
+}
+
+Error Handling
+All endpoints return standard HTTP status codes.
+401 Unauthorized if token is missing or invalid.
+404 Not Found if resource does not exist.
+Models
+See README.md for details on Expense, Income, Budget, and User fields.
+
+Example Usage
+curl -H "Authorization: Token <your_token>" https://yourdomain/api/expenses/
