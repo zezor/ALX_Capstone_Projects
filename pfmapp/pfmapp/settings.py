@@ -90,6 +90,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
+    'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler',
 }
 
 
