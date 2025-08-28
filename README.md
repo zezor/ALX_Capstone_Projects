@@ -87,5 +87,9 @@ End Date
 
 
 
-
+Feature updates
+Create an expense category table
+Creaate income source table
+Budget can be setup for all created expense categories for variance analysis
+Run variance for a paticular month
 

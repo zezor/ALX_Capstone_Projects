@@ -45,6 +45,15 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',  
 ]
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler',
+}
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -86,12 +95,6 @@ WSGI_APPLICATION = 'pfmapp.wsgi.application'
 # }
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'EXCEPTION_HANDLER': 'accounts.utils.custom_exception_handler',
-}
 
 
 DATABASES = {

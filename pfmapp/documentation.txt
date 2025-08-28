@@ -4,7 +4,19 @@ All endpoints (except budget endpoints) require Token Authentication.
 Include your token in the Authorization header as:
 Authorization: Token <your_token>
 
+
 Endpoints
+User
+POST / api/refister
+Request Body (POST):
+{
+    "email": "kama@outlook.com",
+    "password": "Rasnaana12@",
+    "username": "keema"
+}
+
+
+
 Expenses
 List/Create Expenses
 GET /api/expenses/
