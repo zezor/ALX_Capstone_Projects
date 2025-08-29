@@ -53,8 +53,8 @@ class IncomeDetailView(generics.RetrieveUpdateDestroyAPIView):
 # BUDGET VIEWS
 class BudgetListCreateView(generics.ListCreateAPIView):
     serializer_class = BudgetSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
+   
 
     def get_queryset(self):
         return Budget.objects.filter(user=self.request.user)
@@ -65,8 +65,7 @@ class BudgetListCreateView(generics.ListCreateAPIView):
 
 class BudgetDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BudgetSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return Budget.objects.filter(user=self.request.user)
