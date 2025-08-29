@@ -82,6 +82,7 @@ End Date
 
 /api/budgets/id/         PUT/DELETE               .......Update/delete budget
 
+/api/register/             POST                   .......Login to get auth token
 /api/login/                  POST                   .......Login to get auth token
 
 
