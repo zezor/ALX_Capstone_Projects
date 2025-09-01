@@ -1,7 +1,7 @@
 from logging import raiseExceptions
 from rest_framework.views import APIView
 from rest_framework import permissions
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .serializers import UserProfileSerializer, UserSerializer, RegisterSerializer, LoginSerializer, UserDetailsSerializer
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import generics
@@ -27,7 +27,7 @@ class RegisterView(generics.CreateAPIView):
     
 
 class LoginView(APIView):
-    permission_classes = [permissions.AllowAny]  
+    permission_classes = [permissions.AllowAny]   # Allow any user to access this view
 
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(data=request.data)
@@ -46,11 +46,11 @@ class LogoutView(APIView):
         request.user.auth_token.delete()
         return Response(status=204)
 
+
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
-    # permission_classes = [permissions.AllowAny]
-    pagination_class = [permissions.IsAdminUser]
+    serializer_class = UserDetailsSerializer
+    permission_classes = [permissions.IsAdminUser]
 
     def get_object(self):
         return self.request.user
@@ -58,8 +58,8 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class ProfileView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
-    pagination_class = [permissions.IsAdminUser]  
+    serializer_class = UserProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]  # Allow only authenticated users to access this view
     def get_object(self):
         return self.request.user
     

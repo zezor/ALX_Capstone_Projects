@@ -3,17 +3,33 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 
-
+# user model
 User = get_user_model()
 
+# user serializer 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'first_name', 'last_name')
         read_only_fields = ('id',)
 
+# detailed user serializer for admin
+class UserDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'first_name', 'last_name', 'date_of_birth', 'username', 'phone_number', 'location', 'date_joined')
+        read_only_fields = ('id', 'date_joined')
 
 
+# detailed user serializer for profile view
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'first_name', 'last_name', 'date_of_birth', 'username', 'phone_number', 'location')
+        read_only_fields = ('id',)
+
+
+# registration serializer
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     token = serializers.CharField(read_only=True)
@@ -24,11 +40,13 @@ class RegisterSerializer(serializers.ModelSerializer):
             'email', 'password', 'first_name', 'last_name', 'date_of_birth', 'username',
             'phone_number', 'location', 'date_joined', 'token'
         )
-        read_only_fields = ('date_joined',)
+        read_only_fields = ('date_joined', 'token')
 
+    # create user
     def create(self, validated_data):
         user = User.objects.create_user(   
             email=validated_data['email'],
+            username=validated_data.get('username', ''),
             password=validated_data['password'],
             first_name=validated_data.get('first_name', ''),
             last_name=validated_data.get('last_name', ''),
@@ -41,7 +59,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.token = token.key
         user.save()  
         return user
-
+    
+# login serializer
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
